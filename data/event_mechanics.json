@@ -1,0 +1,697 @@
+{
+ "_about": "Главная механика события по классификации AppMagic, поставлена вручную по тексту страницы события на вики. ok: какие ответы считаются верными. exclude: страница не про LiveOps-событие (обновление, реклама, уровень). Нет механики: в тексте вики её не видно, такое событие меряется только на обнаружение и название.",
+ "Candy Crush Saga|2023 Jonas Brothers events": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Candy Crush Saga|20K Gold Gala": {},
+ "Candy Crush Saga|A Magic Trick": {
+  "mechanic": "Core Duplicates",
+  "ok": [
+   "Core Duplicates"
+  ]
+ },
+ "Candy Crush Saga|A Sweet Lunch": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Candy Crush Saga|A sweet peek": {
+  "exclude": true
+ },
+ "Candy Crush Saga|Ads Coupons": {
+  "exclude": true
+ },
+ "Candy Crush Saga|Adventure Path": {
+  "mechanic": "Expedition",
+  "ok": [
+   "Expedition",
+   "Core Duplicates"
+  ]
+ },
+ "Candy Crush Saga|Alien Invasion": {},
+ "Candy Crush Saga|All Stars": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard"
+  ]
+ },
+ "Candy Crush Saga|April Fool's Day (2020)": {
+  "exclude": true
+ },
+ "Candy Crush Saga|Arcade Leagues": {},
+ "Candy Crush Saga|Astros vs. Aliens": {
+  "mechanic": "Team Event",
+  "ok": [
+   "Team Event",
+   "Leaderboard"
+  ]
+ },
+ "Candy Crush Saga|Baker's Box": {
+  "mechanic": "Digging",
+  "ok": [
+   "Digging"
+  ]
+ },
+ "Candy Crush Saga|Bash for Bars": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Candy Crush Saga|Battle of the Bands": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Collection"
+  ]
+ },
+ "Candy Crush Saga|Beat the Buffet": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Collection"
+  ]
+ },
+ "Candy Crush Saga|Booster Drop": {
+  "mechanic": "Other",
+  "ok": [
+   "Other"
+  ]
+ },
+ "Candy Crush Saga|Bubblegum Battle": {},
+ "Candy Crush Saga|Bubblegum Season": {},
+ "Candy Crush Saga|Cake Climb": {
+  "mechanic": "Lava Quest",
+  "ok": [
+   "Lava Quest",
+   "Win Streak"
+  ]
+ },
+ "Candy Crush Saga|Cake Climb/Level 1": {
+  "exclude": true
+ },
+ "Candy Crush Saga|Cake Climb/Level 3": {
+  "exclude": true
+ },
+ "Candy Crush Saga|Cake Collection": {},
+ "Candy Crush Saga|Cake Crumbs": {
+  "mechanic": "Core Duplicates",
+  "ok": [
+   "Core Duplicates"
+  ]
+ },
+ "Candy Crush Saga|Cake Hunt": {},
+ "Candy Crush Saga|Cake Quests": {},
+ "Candy Crush Saga|Camera Collection": {},
+ "Candy Crush Saga|Candy Celebration": {},
+ "Candy Crush Saga|Candy Collection": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Candy Crush Saga|Candy Column": {
+  "mechanic": "Lava Quest",
+  "ok": [
+   "Lava Quest",
+   "Win Streak"
+  ]
+ },
+ "Candy Crush Saga|Candy Coronation": {},
+ "Candy Crush Saga|Candy Cup": {},
+ "Candy Crush Saga|Candy Jam Hoopfest": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Collection"
+  ]
+ },
+ "Candy Crush Saga|Candy Necklace": {
+  "mechanic": "Win Streak",
+  "ok": [
+   "Win Streak"
+  ]
+ },
+ "Candy Crush Saga|Candy Quests (2023)": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection",
+   "Other"
+  ]
+ },
+ "Candy Crush Saga|Candy Royale": {
+  "mechanic": "Lava Quest",
+  "ok": [
+   "Lava Quest",
+   "Win Streak"
+  ]
+ },
+ "Candy Crush Saga|Caramel Cup": {
+  "mechanic": "Race",
+  "ok": [
+   "Race",
+   "Leaderboard"
+  ]
+ },
+ "Candy Crush Saga|Carnival Climb": {},
+ "Candy Crush Saga|Carnival Parade": {
+  "mechanic": "Lava Quest",
+  "ok": [
+   "Lava Quest",
+   "Win Streak"
+  ]
+ },
+ "Candy Crush Saga|Catch That Troll": {},
+ "Candy Crush Saga|Cauldron Challenge": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Collection"
+  ]
+ },
+ "Royal Match|⛺️ Hidden Temple": {
+  "mechanic": "Digging",
+  "ok": [
+   "Digging"
+  ]
+ },
+ "Royal Match|🎈 Balloon Rise": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection",
+   "Win Streak"
+  ]
+ },
+ "Royal Match|🏹 Archery Arena": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Win Streak",
+   "Collection"
+  ]
+ },
+ "Royal Match|🔥 Dragon Nest": {
+  "mechanic": "Team Event",
+  "ok": [
+   "Team Event",
+   "Collection"
+  ]
+ },
+ "Royal Match|🔮 Magic Cauldron": {
+  "mechanic": "Other",
+  "ok": [
+   "Other",
+   "Collection"
+  ]
+ },
+ "Township|Advanced Agriculture Event": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Collection"
+  ]
+ },
+ "Township|Aerial Challenge Event": {
+  "mechanic": "Other",
+  "ok": [
+   "Other",
+   "Collection"
+  ]
+ },
+ "Township|Amusement Park Event": {},
+ "Township|Ancient World Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Animal Planet Event": {},
+ "Township|Apple Festival Event": {},
+ "Township|Appley Ever After Event": {
+  "mechanic": "Customization/Decoration",
+  "ok": [
+   "Customization/Decoration"
+  ]
+ },
+ "Township|Arabian Pass Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass"
+  ]
+ },
+ "Township|Arabian Tales Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Arcade Fever Event": {},
+ "Township|Arctic Adventure Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Customization/Decoration"
+  ]
+ },
+ "Township|Around the World Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Astro Pass Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass"
+  ]
+ },
+ "Township|Ballroom Adventure Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Beach Vacation Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Beach Vacation Event 2024": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Big Screen Adventure Event": {
+  "mechanic": "Expedition",
+  "ok": [
+   "Expedition"
+  ]
+ },
+ "Township|Bloom and Buzz": {
+  "mechanic": "Team Event",
+  "ok": [
+   "Team Event"
+  ]
+ },
+ "Township|Blossoming Boulevards Event": {},
+ "Township|Botanical Bonanza Event": {
+  "mechanic": "Other",
+  "ok": [
+   "Other"
+  ]
+ },
+ "Township|Brazilian Carnival Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Brotherhood of the Knights Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Bubble Gum Festival Event": {},
+ "Township|Buccaneer Fun Event": {},
+ "Township|Cake Day Event": {},
+ "Township|Call of the Jungle Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Carnival of Venice Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Cash Splash Event": {},
+ "Township|Castle in the Trees Event": {
+  "mechanic": "Customization/Decoration",
+  "ok": [
+   "Customization/Decoration"
+  ]
+ },
+ "Township|Cave House Event": {
+  "mechanic": "Customization/Decoration",
+  "ok": [
+   "Customization/Decoration"
+  ]
+ },
+ "Township|Christmas 2014 Event": {},
+ "Township|Christmas 2015 Event": {},
+ "Township|Christmas 2018 Event": {},
+ "Township|Christmas Miracles Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Christmas Miracles Event 2023": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Christmas Pass Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass"
+  ]
+ },
+ "Township|Christmas Rescue 2019 Event": {
+  "mechanic": "Expedition",
+  "ok": [
+   "Expedition"
+  ]
+ },
+ "Township|Color Splash Event": {},
+ "Township|Detective Stories Event": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Township|Dinosaur Trail Event": {},
+ "Homescapes|Art of Origami": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Homescapes|Autumn Gifts": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Homescapes|Bloom & Buzz": {
+  "mechanic": "Team Event",
+  "ok": [
+   "Team Event",
+   "Lucky Wheel"
+  ]
+ },
+ "Homescapes|Bow Ties and Butterflies": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Homescapes|Chocolate Sophistication": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Homescapes|Christmas Event": {
+  "mechanic": "Customization/Decoration",
+  "ok": [
+   "Customization/Decoration",
+   "Collection"
+  ]
+ },
+ "Homescapes|Citrus Garden": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Homescapes|Cooking Madness": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Race"
+  ]
+ },
+ "Homescapes|Creepy Season": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Homescapes|Cupcake Cup": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard"
+  ]
+ },
+ "Homescapes|Dance Season": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Homescapes|Dragon Tales": {
+  "mechanic": "Win Streak",
+  "ok": [
+   "Win Streak",
+   "Lava Quest"
+  ]
+ },
+ "Homescapes|Easter Egg Hunt": {
+  "mechanic": "Customization/Decoration",
+  "ok": [
+   "Customization/Decoration",
+   "Collection"
+  ]
+ },
+ "Homescapes|Event Tournaments": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard"
+  ]
+ },
+ "Homescapes|Fireworks Show": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Homescapes|Flower Market": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Homescapes|Four Elements": {
+  "mechanic": "Team Event",
+  "ok": [
+   "Team Event"
+  ]
+ },
+ "Homescapes|Furry Ruckus": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Homescapes|Gold Run Event": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Homescapes|Gold Rush": {
+  "mechanic": "Race",
+  "ok": [
+   "Race",
+   "Leaderboard"
+  ]
+ },
+ "Homescapes|High Flying": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard"
+  ]
+ },
+ "Gardenscapes|Beat the Heat": {
+  "mechanic": "Win Streak",
+  "ok": [
+   "Win Streak",
+   "Lava Quest"
+  ]
+ },
+ "Gardenscapes|Boat Race": {
+  "mechanic": "Race",
+  "ok": [
+   "Race"
+  ]
+ },
+ "Gardenscapes|Bowling Match": {
+  "mechanic": "Team Event",
+  "ok": [
+   "Team Event",
+   "Leaderboard"
+  ]
+ },
+ "Gardenscapes|Bumper Crop": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Collection"
+  ]
+ },
+ "Gardenscapes|Campfire Stories": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Gardenscapes|Catch a Wave": {
+  "mechanic": "Lava Quest",
+  "ok": [
+   "Lava Quest",
+   "Win Streak",
+   "Leaderboard"
+  ]
+ },
+ "Gardenscapes|Colors of Life": {
+  "mechanic": "Customization/Decoration",
+  "ok": [
+   "Customization/Decoration"
+  ]
+ },
+ "Gardenscapes|Culinary Battle": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Collection"
+  ]
+ },
+ "Gardenscapes|Dance Season": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Gardenscapes|Dog Training": {
+  "mechanic": "Expedition",
+  "ok": [
+   "Expedition",
+   "Core Duplicates"
+  ]
+ },
+ "Gardenscapes|Easter Adventure": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Gardenscapes|Electric Show": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard"
+  ]
+ },
+ "Gardenscapes|Electric Showdown": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Race"
+  ]
+ },
+ "Gardenscapes|Ellie's Makeover Show": {
+  "mechanic": "Customization/Decoration",
+  "ok": [
+   "Customization/Decoration"
+  ]
+ },
+ "Gardenscapes|Fancy Feathers": {
+  "mechanic": "Team Event",
+  "ok": [
+   "Team Event"
+  ]
+ },
+ "Gardenscapes|Festival of Rewards": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Gardenscapes|Fiery Sprint": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard",
+   "Race"
+  ]
+ },
+ "Gardenscapes|Fireworks Fair": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Gardenscapes|Fireworks Festival": {
+  "mechanic": "Leaderboard",
+  "ok": [
+   "Leaderboard"
+  ]
+ },
+ "Gardenscapes|First Time's a Charm": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection",
+   "Win Streak"
+  ]
+ },
+ "Gardenscapes|Frosty Season": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Gardenscapes|Furry Season": {
+  "mechanic": "Pass",
+  "ok": [
+   "Pass",
+   "Collection"
+  ]
+ },
+ "Gardenscapes|Gardening Duties": {
+  "mechanic": "Collection",
+  "ok": [
+   "Collection"
+  ]
+ },
+ "Gardenscapes|Gardens of Barcelona": {},
+ "Gardenscapes|Gemstone Fever": {
+  "mechanic": "Digging",
+  "ok": [
+   "Digging",
+   "Expedition"
+  ]
+ },
+ "Gardenscapes|Gnome Treasure": {
+  "mechanic": "Digging",
+  "ok": [
+   "Digging"
+  ]
+ }
+}
