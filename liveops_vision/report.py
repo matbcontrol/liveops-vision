@@ -37,9 +37,11 @@ def main() -> None:
         return
 
     configs: dict[str, list[dict]] = dict(runs)
-    for cheap in [k for k in runs if k.startswith("claude-haiku")]:
+    is_cheap = lambda k: "haiku" in k or "lite" in k  # noqa: E731
+    for cheap in [k for k in runs if is_cheap(k)]:
         rest = cheap.split("__", 1)[1]
-        for strong in [k for k in runs if not k.startswith("claude-haiku") and k.split("__", 1)[1] == rest]:
+        family = cheap.split("-")[0]
+        for strong in [k for k in runs if not is_cheap(k) and k.startswith(family) and k.split("__", 1)[1] == rest]:
             configs[f"cascade: {cheap.split('__')[0]} → {strong.split('__')[0]}__{rest}"] = cascade(runs[cheap], runs[strong])
 
     summary = {name: score(rows, labels) for name, rows in configs.items()}

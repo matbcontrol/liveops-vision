@@ -6,6 +6,7 @@ requires-python = ">=3.12"
 dependencies = [
     "anthropic>=2.14.0",
     "fastapi>=0.165.0",
+    "google-genai>=3.6.1",
     "httpx>=0.28.1",
     "numpy>=2.5.5",
     "opencv-python-headless>=5.1.0.95",

@@ -24,12 +24,40 @@ LABELS = ROOT / "data" / "labels.jsonl"
 RUNS = ROOT / "runs"
 
 
+def load_env() -> None:
+    """Ключи из .env в корне проекта (файл в .gitignore), если их нет в окружении."""
+    import os
+
+    env = ROOT / ".env"
+    if env.exists():
+        for line in env.read_text(encoding="utf-8").splitlines():
+            if "=" in line and not line.lstrip().startswith("#"):
+                k, v = line.split("=", 1)
+                os.environ.setdefault(k.strip(), v.strip())
+
+
+def make_reader(model: str, prompt: str = "v1"):
+    """Функция (картинка, effort) -> Call для Claude или Gemini по имени модели."""
+    import os
+
+    if model.startswith("gemini"):
+        from google import genai
+        from google.genai import types
+
+        from .gemini import read_screenshot as gem_read
+
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"], http_options=types.HttpOptions(timeout=90_000))
+        return lambda data, mt, effort: gem_read(client, model, data, mt, effort=effort, prompt=prompt)
+    client = anthropic.Anthropic(max_retries=4)
+    return lambda data, mt, effort: read_screenshot(client, model, data, mt, effort=effort, prompt=prompt)
+
+
 def load_labels() -> list[dict]:
     return [json.loads(l) for l in LABELS.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
-def run_tag(model: str, max_side: int | None, effort: str) -> str:
-    return f"{model}__side{max_side or 'full'}__{effort}"
+def run_tag(model: str, max_side: int | None, effort: str, prompt: str = "v1") -> str:
+    return f"{model}__side{max_side or 'full'}__{effort}" + ("" if prompt == "v1" else f"__{prompt}")
 
 
 def prepare(item: dict, max_side: int | None) -> tuple[bytes, str, tuple[int, int]]:
@@ -45,17 +73,19 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--effort", default="low")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--prompt", default="v1", choices=["v1", "v2"])
     args = ap.parse_args(argv)
     side = args.max_side or None
 
+    load_env()
     items = [x for x in load_labels() if not x.get("duplicate_of")]
     if args.limit:
         items = items[: args.limit]
-    client = anthropic.Anthropic(max_retries=4)
     RUNS.mkdir(exist_ok=True)
 
     for model in args.models:
-        out = RUNS / f"{run_tag(model, side, args.effort)}.jsonl"
+        reader = make_reader(model, args.prompt)
+        out = RUNS / f"{run_tag(model, side, args.effort, args.prompt)}.jsonl"
         done = set()
         if out.exists():
             done = {json.loads(l)["id"] for l in out.read_text(encoding="utf-8").splitlines() if l.strip()}
@@ -64,14 +94,18 @@ def main(argv: list[str] | None = None) -> None:
 
         def work(item: dict) -> dict:
             data, mt, (w, h) = prepare(item, side)
-            call = read_screenshot(client, model, data, mt, effort=args.effort)
-            return as_row(call, id=item["id"], width=w, height=h, max_side=side, effort=args.effort)
+            call = reader(data, mt, args.effort)
+            return as_row(call, id=item["id"], width=w, height=h, max_side=side, effort=args.effort, prompt=args.prompt)
 
         with out.open("a", encoding="utf-8") as f, ThreadPoolExecutor(args.workers) as ex:
             futures = [ex.submit(work, it) for it in todo]
             spent = 0.0
             for i, fut in enumerate(as_completed(futures), 1):
-                row = fut.result()
+                try:
+                    row = fut.result()
+                except Exception as e:  # одна сломанная картинка не должна ронять прогон
+                    print(f"  ошибка: {type(e).__name__}: {e}", flush=True)
+                    continue
                 spent += row["cost_usd"]
                 f.write(json.dumps(row, ensure_ascii=False) + "\n")
                 f.flush()

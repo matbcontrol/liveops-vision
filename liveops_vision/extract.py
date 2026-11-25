@@ -25,7 +25,18 @@ PRICES: dict[str, tuple[float, float, float]] = {
 FALLBACK_MODELS = {"claude-sonnet-5-5", "claude-opus-5-5"}
 
 
-def system_prompt() -> str:
+# Версия 2 появилась после разбора ошибок версии 1: модель принимала постоянные
+# разделы игры (музей с коллекцией, аэропорт, заводы, ежедневный бонус) за события.
+PERMANENT_RULE = """
+
+Permanent game features are not LiveOps events even when they look like progress screens: collections and museums that are always available, production buildings and orders (factories, airport, train, port), the shop, daily login bonuses, profile and settings, level start and level end pop-ups. Mark a screen as an event only when it shows a limited-time signal: a countdown timer or end date, an event title or banner, event points or a season/event pass. A collection screen with no timer and no event branding is a permanent feature."""
+
+
+def system_prompt(version: str = "v1") -> str:
+    return _base_prompt() + (PERMANENT_RULE if version == "v2" else "")
+
+
+def _base_prompt() -> str:
     mech = "\n".join(f"- {k}: {v}" for k, v in MECHANICS.items())
     screens = "\n".join(f"- {k}: {v}" for k, v in SCREEN_TYPES.items())
     return f"""You read screenshots of mobile games for a market intelligence product that tracks LiveOps: limited-time events, their mechanics and how games run them.
@@ -62,7 +73,7 @@ def cost(model: str, input_tokens: int, output_tokens: int, cache_read: int = 0)
 
 
 def read_screenshot(client: anthropic.Anthropic, model: str, image: bytes, media_type: str = "image/png",
-                    effort: str = "low", hint: str | None = None) -> Call:
+                    effort: str = "low", hint: str | None = None, prompt: str = "v1") -> Call:
     import base64
 
     content: list[dict] = [
@@ -72,7 +83,7 @@ def read_screenshot(client: anthropic.Anthropic, model: str, image: bytes, media
     kwargs: dict = dict(
         model=model,
         max_tokens=4000,
-        system=[{"type": "text", "text": system_prompt(), "cache_control": {"type": "ephemeral"}}],
+        system=[{"type": "text", "text": system_prompt(prompt), "cache_control": {"type": "ephemeral"}}],
         messages=[{"role": "user", "content": content}],
         output_format=ScreenshotReading,
         output_config={"effort": effort},

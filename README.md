@@ -10,10 +10,12 @@ RESULTS_PLACEHOLDER
 
 ```
 screenshot ──> OpenCV ──────────────> cheap model ──(sure?)──> answer ──> Postgres: events calendar
-               │ same screen seen       claude-haiku-5-5   │ no
-               │ before? reuse answer                      └──> strong model (claude-sonnet-5-5)
+               │ same screen seen       flash-lite / haiku │ no
+               │ before? reuse answer                      └──> stronger model (flash / sonnet)
                └ downscale to 1024 px long edge
 ```
+
+The same schema, prompt and cost logging run on two providers: Gemini (`liveops_vision/gemini.py`) and Claude (`liveops_vision/extract.py`). The measured results below are from Gemini models on the free tier, with cost computed at paid-tier prices. The Claude path is covered by tests against a mocked client and has not been measured on this dataset yet.
 
 - **OpenCV before the model.** A near-duplicate check (shape hash plus a 16×16 colour thumbnail) skips screens that were already read; a shape hash alone merges different events drawn in the same pop-up template, which the tests cover. Images are downscaled because image tokens grow with pixel area, not with information.
 - **Structured output.** The answer is constrained to a JSON schema (`liveops_vision/schema.py`), so it always parses: screen type, event flag, title as written, mechanics, motivations, timer, rewards, confidence and one sentence of evidence.
@@ -40,8 +42,9 @@ There is no retrieval here on purpose. Each screenshot carries everything needed
 uv sync
 uv run python data/collect.py          # download screenshots (~350 files)
 uv run python data/build_labels.py     # labels + near-duplicate check
-setx ANTHROPIC_API_KEY ...             # then open a new terminal
-uv run python -m liveops_vision.run --models claude-haiku-5-5 claude-sonnet-5-5 claude-opus-5-5 --max-side 1024
+# keys in .env (git-ignored): GEMINI_API_KEY=... and/or ANTHROPIC_API_KEY=...
+uv run python -m liveops_vision.run --models gemini-3.5-flash-lite gemini-3.6-flash --max-side 1024
+uv run python -m liveops_vision.run --models claude-haiku-5-5 claude-sonnet-5-5 --max-side 1024
 uv run python -m liveops_vision.report # results/results.md
 uv run uvicorn liveops_vision.service:app
 uv run pytest
