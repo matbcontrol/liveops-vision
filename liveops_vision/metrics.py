@@ -122,13 +122,49 @@ def needs_escalation(reading: dict | None) -> bool:
     return False
 
 
-def cascade(cheap: list[dict], strong: list[dict]) -> list[dict]:
-    """Каскад из готовых прогонов: ответ дешёвой модели или, по правилу, сильной; цена складывается."""
+def main_mechanic(reading: dict | None) -> str | None:
+    if not reading or not reading["is_liveops_event"]:
+        return None
+    return (reading["mechanics"] or ["Other"])[0]
+
+
+def disagree(a: dict | None, b: dict | None) -> bool:
+    """Две дешёвые модели расходятся: одна видит событие, другая нет, или главные механики разные."""
+    if not a or not b:
+        return True
+    return a["is_liveops_event"] != b["is_liveops_event"] or main_mechanic(a) != main_mechanic(b)
+
+
+def calibration(rows: list[dict], labels: dict[str, dict]) -> dict[str, dict]:
+    """Насколько самооценка модели совпадает с правотой: доля верных ответов по уровню уверенности."""
+    out: dict[str, dict] = {}
+    for r in rows:
+        x, lab = r.get("reading"), labels.get(r["id"])
+        if not x or not lab:
+            continue
+        ok = lab["is_event"] == x["is_liveops_event"]
+        if ok and lab["is_event"] and lab.get("mechanic"):
+            ok = main_mechanic(x) in lab["mechanics_ok"]
+        c = out.setdefault(x["confidence"], {"n": 0, "right": 0})
+        c["n"] += 1
+        c["right"] += ok
+    for c in out.values():
+        c["accuracy"] = c["right"] / c["n"]
+    return out
+
+
+def cascade(cheap: list[dict], strong: list[dict], escalate=None) -> list[dict]:
+    """Каскад из готовых прогонов: ответ дешёвой модели или, по правилу, сильной; цена складывается.
+
+    escalate: функция строки дешёвой модели -> bool; по умолчанию самооценка (needs_escalation).
+    Если сильного ответа для скриншота нет, остаётся ответ дешёвой модели.
+    """
+    escalate = escalate or (lambda r: needs_escalation(r.get("reading")))
     by_id = {r["id"]: r for r in strong}
     out = []
     for r in cheap:
         s = by_id.get(r["id"])
-        if needs_escalation(r.get("reading")) and s:
+        if escalate(r) and s and s.get("reading"):
             out.append({**s, "cost_usd": r["cost_usd"] + s["cost_usd"], "latency_s": r["latency_s"] + s["latency_s"],
                         "input_tokens": r["input_tokens"] + s["input_tokens"], "output_tokens": r["output_tokens"] + s["output_tokens"],
                         "escalated": True})

@@ -126,6 +126,20 @@ def test_score_and_cascade():
     assert s_mixed["cost_per_image"] == pytest.approx((0.011 + 0.001) / 2)
 
 
+def test_disagreement_and_calibration():
+    race, digging = reading(), reading(mechanics=["Digging"])
+    no_event = reading(is_liveops_event=False, mechanics=[], event_name=None)
+    assert not m.disagree(race, reading(mechanics=["Race", "Leaderboard"]))
+    assert m.disagree(race, digging) and m.disagree(race, no_event) and m.disagree(race, None)
+    labels = {"a": {"is_event": True, "mechanic": "Race", "mechanics_ok": ["Race"]},
+              "b": {"is_event": True, "mechanic": "Race", "mechanics_ok": ["Race"]},
+              "c": {"is_event": False, "mechanic": None, "mechanics_ok": []}}
+    rows = [{"id": "a", "reading": race}, {"id": "b", "reading": digging}, {"id": "c", "reading": reading(confidence="medium")}]
+    cal = m.calibration(rows, labels)
+    assert cal["high"] == {"n": 2, "right": 1, "accuracy": 0.5}
+    assert cal["medium"]["accuracy"] == 0.0
+
+
 def test_cost():
     assert cost("claude-haiku-5-5", 1_000_000, 0) == pytest.approx(0.10)
     assert cost("claude-sonnet-5-5", 1000, 1000) == pytest.approx(0.012)

@@ -74,11 +74,29 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--prompt", default="v1", choices=["v1", "v2"])
+    ap.add_argument("--only", default="", help="escalated:<прогон> или disagree:<прогон A>,<прогон B>: только скриншоты, которые каскад отдаст сильной модели")
     args = ap.parse_args(argv)
     side = args.max_side or None
 
     load_env()
     items = [x for x in load_labels() if not x.get("duplicate_of")]
+    if args.only:
+        from .metrics import disagree, needs_escalation
+
+        def rows_of(stem: str) -> dict[str, dict]:
+            return {r["id"]: r for r in map(json.loads, (RUNS / f"{stem}.jsonl").read_text(encoding="utf-8").splitlines())}
+
+        kind, _, spec = args.only.partition(":")
+        if kind == "escalated":
+            src = rows_of(spec)
+            keep = {i for i, r in src.items() if needs_escalation(r.get("reading"))}
+        elif kind == "disagree":
+            a, b = (rows_of(s) for s in spec.split(","))
+            keep = {i for i in a if disagree(a[i].get("reading"), b.get(i, {}).get("reading"))}
+        else:
+            raise SystemExit(f"неизвестный фильтр {args.only}")
+        items = [x for x in items if x["id"] in keep]
+        print(f"фильтр {args.only}: {len(items)} скриншотов", flush=True)
     if args.limit:
         items = items[: args.limit]
     RUNS.mkdir(exist_ok=True)

@@ -1,5 +1,5 @@
 {
- "_about": "Картинки, убранные из оценки после просмотра глазами: арт зданий и персонажей, промо-картинки, инфографика, загрузочные экраны, фото, игровые поля без интерфейса события, экраны с неоднозначной принадлежностью (ежедневный бонус, подарок за серию побед, входящие сообщения).",
+ "_about": "Картинки, убранные из оценки после просмотра глазами: арт зданий и персонажей, промо-картинки, инфографика, загрузочные экраны, фото, игровые поля без интерфейса события, экраны с неоднозначной принадлежностью (ежедневный бонус, подарок за серию побед, входящие сообщения). Одна картинка убрана после первого прогона: при разборе ошибок оказалось, что метка «не событие» неверна (окно Race с таймером).",
  "exclude": {
   "d9cdcb8a69acd8d5": "Candy Crush Saga #7: A Magic Trick / File:IMG 2345.png",
   "621e289abb4c211d": "Candy Crush Saga #8: A Magic Trick / File:Screenshot 2015-10-12-10-28-58.png",
@@ -135,6 +135,7 @@
   "1cc8d11cfd02021d": "Township regular #150: Category:Screenshots jpg / File:Screenshot 20200519-144529 Township.jpg",
   "3efdf7585264379e": "Township regular #151: Category:Screenshots jpg / File:Screenshot 20200519-162343 Township.jpg",
   "5342584c35ad4821": "Township regular #154: Category:Screenshots jpg / File:TSFrontChess.jpg",
-  "f4d2aa3a4e069192": "Township regular #156: Category:Screenshots jpg / File:Transport Magnate Guide.jpg"
+  "f4d2aa3a4e069192": "Township regular #156: Category:Screenshots jpg / File:Transport Magnate Guide.jpg",
+  "9f37c53bf4a58758": "Township regular: File:WhatsApp Image 2020-06-30 at 6.50.46 PM.jpeg — найдено при разборе ошибок: на скриншоте окно события Race с таймером, метка «не событие» была ошибкой разметки"
  }
 }
