@@ -6,11 +6,10 @@
 |---|---|---|---|---|---|
 | gemini-3.5-flash-lite · 1024 px · prompt v1 | 84.7 % / 98.5 % | 78.5 % (73–84 %) | 66.5 % | $0.94 | 2.4 / 3.7 s |
 | gemini-3.5-flash-lite · 1024 px · prompt v2 | 98.1 % / 96.2 % | 79.5 % (74–85 %) | 66.4 % | $0.96 | 3.1 / 8.2 s |
-| cascade: gemini-3.5-flash-lite · 1024 px · prompt v1 → gemini-3.6-flash (escalated 0.3 %) | 84.7 % / 98.5 % | 78.5 % (73–84 %) | 66.5 % | $0.94 | 2.4 / 3.7 s |
 
 Brackets: 95 % bootstrap interval over screenshots. Cost at paid-tier prices; the runs themselves used the free tier.
 
-Partial runs (free-tier daily limits), not in the table: gemini-3.1-flash-lite · 1024 px · prompt v2 (4 screenshots), gemini-3.5-flash-lite · 512 px · prompt v2 (6 screenshots), gemini-3.6-flash · 1024 px · prompt v1 (46 screenshots)
+Partial runs (free-tier daily limits), not in the table: gemini-3.1-flash-lite · 1024 px · prompt v2 (14 screenshots), gemini-3.5-flash-lite · 512 px · prompt v2 (6 screenshots), gemini-3.6-flash · 1024 px · prompt v1 (46 screenshots)
 
 ## gemini-3.5-flash-lite · 1024 px · prompt v2: by game
 

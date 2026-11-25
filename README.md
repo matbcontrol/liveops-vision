@@ -4,7 +4,25 @@ Reads mobile game screenshots and tells which LiveOps event is on screen: is it 
 
 Today this work is done by people: Sensor Tower says its LiveOps team logs hundreds of hours of play to capture events across the top 180 games. The question this repo answers is how much of that a vision model can read, how well, and at what price per thousand screenshots.
 
-RESULTS_PLACEHOLDER
+## Results
+
+370 screenshots from five casual games (Township, Candy Crush Saga, Gardenscapes, Homescapes, Royal Match): 265 event screens, 195 of them with a mechanic label, and 105 ordinary screens. Full tables, per-game breakdown and error lists: [results/results.md](results/results.md).
+
+| Gemini 3.5 Flash-Lite, 1024 px | Event: precision / recall | Main mechanic | $ per 1000 screenshots | Latency p50 |
+|---|---|---|---|---|
+| prompt v1 | 84.7 % / 98.5 % | 78.5 % (73–84 %) | $0.94 | 2.4 s |
+| prompt v2 (permanent-features rule) | **98.1 % / 96.2 %** | **79.5 % (74–85 %)** | $0.96 | 3.1 s |
+
+Brackets are 95 % bootstrap intervals. Cost is at paid-tier prices; the runs used the free tier.
+
+What the numbers say:
+
+- **Finding events is cheap and reliable; naming the mechanic is the hard part.** About one screenshot in five gets the wrong main mechanic. The usual confusions are close neighbours: a leaderboard read as Race or Collection, special levels (Core Duplicates) read as Collection. Many events combine mechanics, so the second-best answer is often right: the labelled mechanic is among the model's answers in 86 % of cases.
+- **The real trap is permanent meta, not events.** Version 1 flagged 46 of 74 ordinary Township screens as events: the museum collection, the airport, factories. They look exactly like event progress screens. One rule in the prompt (no timer, no event banner, no event points means a permanent feature) cut false alarms from 48 to 6 and cost 2.3 points of recall. The rule was written after looking at v1's errors, so this gain is an upper estimate until it is checked on fresh screenshots.
+- **Self-reported confidence is not a signal.** The model says "high" on 359 of 370 screenshots and is fully right on 87 % of them. A cascade that escalates on low confidence would send almost nothing to the stronger model. Disagreement between two cheap models is the better trigger (see results).
+- **Scale.** At these prices, reading 50 screenshots a day from each of 180 games costs about $9 a day before the duplicate check removes repeated screens.
+
+Not measured yet, because free-tier daily limits allow 20 requests to the stronger Flash models: the cascade into Gemini 3.6 Flash, the 512 px trade-off, and the Claude path.
 
 ## How it works
 

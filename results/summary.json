@@ -82,48 +82,5 @@
   "latency_p90": 8.166373090003619,
   "input_tokens_mean": 2019.718918918919,
   "output_tokens_mean": 141.8189189189189
- },
- "cascade: gemini-3.5-flash-lite · 1024 px · prompt v1 → gemini-3.6-flash": {
-  "n": 370,
-  "answered": 370,
-  "errors": 0,
-  "fallback_served": 0,
-  "detection": {
-   "tp": 261,
-   "fp": 47,
-   "fn": 4,
-   "tn": 58,
-   "precision": 0.8474025974025974,
-   "recall": 0.9849056603773585,
-   "f1": 0.9109947643979057,
-   "accuracy": 0.8621621621621621
-  },
-  "detection_acc_ci": [
-   0.827027027027027,
-   0.8945945945945946
-  ],
-  "name_acc": 0.6652173913043479,
-  "name_n": 230,
-  "name_returned_rate": 0.8043478260869565,
-  "name_precision": 0.827027027027027,
-  "name_generic_screens": 13,
-  "name_ci": [
-   0.6086956521739131,
-   0.7260869565217392
-  ],
-  "mechanic_main_acc": 0.7846153846153846,
-  "mechanic_any_acc": 0.8564102564102564,
-  "mechanic_n": 195,
-  "mechanic_ci": [
-   0.7282051282051282,
-   0.841025641025641
-  ],
-  "cost_per_image": 0.0009434386486486487,
-  "cost_per_1000": 0.9434386486486487,
-  "latency_p50": 2.3872548500075936,
-  "latency_p90": 3.674275809968822,
-  "input_tokens_mean": 1912.8918918918919,
-  "output_tokens_mean": 146.5081081081081,
-  "escalated_share": 0.002702702702702703
  }
 }
