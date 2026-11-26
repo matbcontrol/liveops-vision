@@ -110,6 +110,7 @@ def main() -> None:
             out.append(f"| {level} | {cal[level]['n']} | {pct(cal[level]['accuracy'])} |")
 
     lites = [k for k in full if "lite" in k and k.endswith("__v2") and "side1024" in k]
+    lites.sort(key=lambda t: pretty(t) != best)  # первой идёт лучшая дешёвая модель, её ошибки и ловим
     if len(lites) >= 2:
         a, b = ({r["id"]: r for r in full[t]} for t in lites[:2])
         agree_ok, dis_ok, n_agree, n_dis = 0, 0, 0, 0
@@ -126,6 +127,21 @@ def main() -> None:
                 f"| models agree | {n_agree} | {pct(agree_ok / n_agree) if n_agree else '—'} |",
                 f"| models disagree | {n_dis} | {pct(dis_ok / n_dis) if n_dis else '—'} |"]
         summary["_disagreement"] = {"agree": n_agree, "agree_right": agree_ok, "disagree": n_dis, "disagree_right": dis_ok}
+
+        # какое правило отдаёт сильной модели больше ошибок дешёвой при том же числе вызовов
+        from .metrics import needs_escalation
+
+        wrong = {i for i, lab in labels.items() if not correct(a.get(i, {}).get("reading"), lab)}
+        triggers = {
+            "low confidence or mechanic \"Other\"": {i for i in labels if needs_escalation(a.get(i, {}).get("reading"))},
+            "two cheap models disagree": {i for i in labels if disagree(a.get(i, {}).get("reading"), b.get(i, {}).get("reading"))},
+        }
+        triggers["either"] = set.union(*triggers.values())
+        out += ["", f"Which rule finds the first model's mistakes ({len(wrong)} of {len(labels)} screenshots are not fully right):", "",
+                "| Escalation rule | Sent to the strong model | Mistakes caught |", "|---|---|---|"]
+        for name, ids in triggers.items():
+            out.append(f"| {name} | {len(ids)} ({pct(len(ids) / len(labels))}) | {len(ids & wrong)} of {len(wrong)} ({pct(len(ids & wrong) / len(wrong)) if wrong else '—'}) |")
+        summary["_triggers"] = {name: {"sent": len(ids), "caught": len(ids & wrong), "wrong": len(wrong)} for name, ids in triggers.items()}
 
     confusion, example = Counter(), defaultdict(str)
     for r in rows:

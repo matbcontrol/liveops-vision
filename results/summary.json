@@ -1,4 +1,46 @@
 {
+ "gemini-3.1-flash-lite · 1024 px · prompt v2": {
+  "n": 370,
+  "answered": 370,
+  "errors": 0,
+  "fallback_served": 0,
+  "detection": {
+   "tp": 256,
+   "fp": 4,
+   "fn": 9,
+   "tn": 101,
+   "precision": 0.9846153846153847,
+   "recall": 0.9660377358490566,
+   "f1": 0.9752380952380952,
+   "accuracy": 0.9648648648648649
+  },
+  "detection_acc_ci": [
+   0.9459459459459459,
+   0.9837837837837838
+  ],
+  "name_acc": 0.6695652173913044,
+  "name_n": 230,
+  "name_returned_rate": 0.808695652173913,
+  "name_precision": 0.8279569892473119,
+  "name_generic_screens": 13,
+  "name_ci": [
+   0.6086956521739131,
+   0.7304347826086957
+  ],
+  "mechanic_main_acc": 0.8307692307692308,
+  "mechanic_any_acc": 0.8769230769230769,
+  "mechanic_n": 195,
+  "mechanic_ci": [
+   0.7794871794871795,
+   0.882051282051282
+  ],
+  "cost_per_image": 0.0008720364864864865,
+  "cost_per_1000": 0.8720364864864865,
+  "latency_p50": 4.995826500002295,
+  "latency_p90": 23.732384070009,
+  "input_tokens_mean": 2019.718918918919,
+  "output_tokens_mean": 244.73783783783784
+ },
  "gemini-3.5-flash-lite · 1024 px · prompt v1": {
   "n": 370,
   "answered": 370,
@@ -82,5 +124,113 @@
   "latency_p90": 8.166373090003619,
   "input_tokens_mean": 2019.718918918919,
   "output_tokens_mean": 141.8189189189189
+ },
+ "gemini-3.5-flash-lite · 512 px · prompt v2": {
+  "n": 370,
+  "answered": 370,
+  "errors": 0,
+  "fallback_served": 0,
+  "detection": {
+   "tp": 258,
+   "fp": 5,
+   "fn": 7,
+   "tn": 100,
+   "precision": 0.9809885931558935,
+   "recall": 0.9735849056603774,
+   "f1": 0.9772727272727272,
+   "accuracy": 0.9675675675675676
+  },
+  "detection_acc_ci": [
+   0.9486486486486486,
+   0.9837837837837838
+  ],
+  "name_acc": 0.6681222707423581,
+  "name_n": 229,
+  "name_returned_rate": 0.8078602620087336,
+  "name_precision": 0.827027027027027,
+  "name_generic_screens": 14,
+  "name_ci": [
+   0.6069868995633187,
+   0.7292576419213974
+  ],
+  "mechanic_main_acc": 0.7692307692307693,
+  "mechanic_any_acc": 0.8307692307692308,
+  "mechanic_n": 195,
+  "mechanic_ci": [
+   0.7076923076923077,
+   0.8256410256410256
+  ],
+  "cost_per_image": 0.0009609562162162162,
+  "cost_per_1000": 0.9609562162162162,
+  "latency_p50": 2.869443150004372,
+  "latency_p90": 4.845522310049273,
+  "input_tokens_mean": 2019.8540540540541,
+  "output_tokens_mean": 142.0
+ },
+ "cascade: gemini-3.5-flash-lite · 1024 px · prompt v2 → gemini-3.6-flash": {
+  "n": 370,
+  "answered": 370,
+  "errors": 0,
+  "fallback_served": 0,
+  "detection": {
+   "tp": 252,
+   "fp": 3,
+   "fn": 13,
+   "tn": 102,
+   "precision": 0.9882352941176471,
+   "recall": 0.9509433962264151,
+   "f1": 0.9692307692307692,
+   "accuracy": 0.9567567567567568
+  },
+  "detection_acc_ci": [
+   0.9351351351351351,
+   0.9756756756756757
+  ],
+  "name_acc": 0.6637554585152838,
+  "name_n": 229,
+  "name_returned_rate": 0.8122270742358079,
+  "name_precision": 0.8172043010752689,
+  "name_generic_screens": 14,
+  "name_ci": [
+   0.6026200873362445,
+   0.7248908296943232
+  ],
+  "mechanic_main_acc": 0.7948717948717948,
+  "mechanic_any_acc": 0.8512820512820513,
+  "mechanic_n": 195,
+  "mechanic_ci": [
+   0.7384615384615385,
+   0.8512820512820513
+  ],
+  "cost_per_image": 0.0010814866216216216,
+  "cost_per_1000": 1.0814866216216217,
+  "latency_p50": 3.1210347499873023,
+  "latency_p90": 8.505856040044456,
+  "input_tokens_mean": 2107.1243243243243,
+  "output_tokens_mean": 156.61081081081082,
+  "escalated_share": 0.043243243243243246
+ },
+ "_disagreement": {
+  "agree": 301,
+  "agree_right": 275,
+  "disagree": 69,
+  "disagree_right": 53
+ },
+ "_triggers": {
+  "low confidence or mechanic \"Other\"": {
+   "sent": 21,
+   "caught": 5,
+   "wrong": 42
+  },
+  "two cheap models disagree": {
+   "sent": 69,
+   "caught": 16,
+   "wrong": 42
+  },
+  "either": {
+   "sent": 76,
+   "caught": 17,
+   "wrong": 42
+  }
  }
 }

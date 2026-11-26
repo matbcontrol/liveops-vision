@@ -106,7 +106,12 @@ def main(argv: list[str] | None = None) -> None:
         out = RUNS / f"{run_tag(model, side, args.effort, args.prompt)}.jsonl"
         done = set()
         if out.exists():
-            done = {json.loads(l)["id"] for l in out.read_text(encoding="utf-8").splitlines() if l.strip()}
+            rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
+            ok = [r for r in rows if not r.get("error")]
+            if len(ok) < len(rows):  # упавшие вызовы (квота, 503) убираем, чтобы перезапуск их повторил
+                out.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in ok), encoding="utf-8")
+                print(f"{model}: убрано {len(rows) - len(ok)} упавших ответов для повтора", flush=True)
+            done = {r["id"] for r in ok}
         todo = [x for x in items if x["id"] not in done]
         print(f"{model}: готово {len(done)}, осталось {len(todo)}", flush=True)
 

@@ -8,21 +8,26 @@ Today this work is done by people: Sensor Tower says its LiveOps team logs hundr
 
 370 screenshots from five casual games (Township, Candy Crush Saga, Gardenscapes, Homescapes, Royal Match): 265 event screens, 195 of them with a mechanic label, and 105 ordinary screens. Full tables, per-game breakdown and error lists: [results/results.md](results/results.md).
 
-| Gemini 3.5 Flash-Lite, 1024 px | Event: precision / recall | Main mechanic | $ per 1000 screenshots | Latency p50 |
+| Configuration | Event: precision / recall | Main mechanic | $ per 1000 screenshots | Latency p50 / p90 |
 |---|---|---|---|---|
-| prompt v1 | 84.7 % / 98.5 % | 78.5 % (73–84 %) | $0.94 | 2.4 s |
-| prompt v2 (permanent-features rule) | **98.1 % / 96.2 %** | **79.5 % (74–85 %)** | $0.96 | 3.1 s |
+| Gemini 3.5 Flash-Lite, 1024 px, prompt v1 | 84.7 % / 98.5 % | 78.5 % (73–84 %) | $0.94 | 2.4 / 3.7 s |
+| Gemini 3.5 Flash-Lite, 1024 px, prompt v2 (permanent-features rule) | 98.1 % / 96.2 % | 79.5 % (74–85 %) | $0.96 | 3.1 / 8.2 s |
+| Gemini 3.5 Flash-Lite, 512 px, prompt v2 | 98.1 % / 97.4 % | 76.9 % (71–83 %) | $0.96 | 2.9 / 4.8 s |
+| Gemini 3.1 Flash-Lite, 1024 px, prompt v2 | **98.5 % / 96.6 %** | **83.1 % (78–88 %)** | $0.87 | 5.0 / 23.7 s |
+| 3.5 Flash-Lite v2, unsure screens sent to Gemini 3.6 Flash (4.3 %) | 98.8 % / 95.1 % | 79.5 % (74–85 %) | $1.08 | 3.1 / 8.5 s |
 
-Brackets are 95 % bootstrap intervals. Cost is at paid-tier prices; the runs used the free tier.
+Brackets are 95 % bootstrap intervals. Cost is at paid-tier prices; the runs used the free tier, which was overloaded during the 3.1 Flash-Lite run, so its latency says more about the free tier than about the model.
 
 What the numbers say:
 
-- **Finding events is cheap and reliable; naming the mechanic is the hard part.** About one screenshot in five gets the wrong main mechanic. The usual confusions are close neighbours: a leaderboard read as Race or Collection, special levels (Core Duplicates) read as Collection. Many events combine mechanics, so the second-best answer is often right: the labelled mechanic is among the model's answers in 86 % of cases.
+- **Finding events is cheap and reliable; naming the mechanic is the hard part.** One screenshot in five or six gets the wrong main mechanic. The usual confusions are close neighbours: a leaderboard read as Race or Collection, special levels (Core Duplicates) read as Collection. Many events combine mechanics, so the second-best answer is often right: for 3.5 Flash-Lite the labelled mechanic is among its answers in 86 % of cases.
 - **The real trap is permanent meta, not events.** Version 1 flagged 46 of 74 ordinary Township screens as events: the museum collection, the airport, factories. They look exactly like event progress screens. One rule in the prompt (no timer, no event banner, no event points means a permanent feature) cut false alarms from 48 to 6 and cost 2.3 points of recall. The rule was written after looking at v1's errors, so this gain is an upper estimate until it is checked on fresh screenshots.
-- **Self-reported confidence is not a signal.** The model says "high" on 359 of 370 screenshots and is fully right on 87 % of them. A cascade that escalates on low confidence would send almost nothing to the stronger model. The next trigger to measure is disagreement between two cheap models (`metrics.disagree`, `run.py --only disagree:...`).
-- **Scale.** At these prices, reading 50 screenshots a day from each of 180 games costs about $9 a day before the duplicate check removes repeated screens.
+- **Self-reported confidence is not a signal.** Both cheap models say "high" on 359–360 of 370 screenshots. The cascade above sent the 16 screens where 3.5 Flash-Lite was unsure (or said "Other") to Gemini 3.6 Flash: the cheap model had 13 of them right, the strong model 12. Accuracy did not move and the bill grew by 12 %.
+- **Disagreement between two cheap models finds mistakes better.** With 3.1 Flash-Lite as the main model and 3.5 Flash-Lite as a second opinion, the two disagree on 69 screenshots (19 %), and those hold 16 of its 42 mistakes. The confidence rule flags 21 screenshots and holds 5. How much a strong model fixes on those 69 is not measured yet: the free tier allows 20 requests a day to the Flash models.
+- **On Gemini, a smaller picture is not cheaper.** A request costs 2 020 input tokens at both 512 and 1024 px, because Gemini bills a fixed number of tokens per image. Going down to 512 px saved nothing and cost 2.6 points of mechanic accuracy (inside the interval). Claude bills by pixel area, so there the trade-off is real.
+- **Scale.** At these prices, reading 50 screenshots a day from each of 180 games costs about $8–9 a day before the duplicate check removes repeated screens.
 
-Not measured yet, because free-tier daily limits allow 20 requests to the stronger Flash models: the cascade into Gemini 3.6 Flash, the 512 px trade-off, and the Claude path.
+Not measured yet: a strong model on the screenshots where the two cheap models disagree, and the Claude path.
 
 ## How it works
 
@@ -35,9 +40,9 @@ screenshot ──> OpenCV ──────────────> cheap mode
 
 The same schema, prompt and cost logging run on two providers: Gemini (`liveops_vision/gemini.py`) and Claude (`liveops_vision/extract.py`). The measured results below are from Gemini models on the free tier, with cost computed at paid-tier prices. The Claude path is covered by tests against a mocked client and has not been measured on this dataset yet.
 
-- **OpenCV before the model.** A near-duplicate check (shape hash plus a 16×16 colour thumbnail) skips screens that were already read; a shape hash alone merges different events drawn in the same pop-up template, which the tests cover. Images are downscaled because image tokens grow with pixel area, not with information.
+- **OpenCV before the model.** A near-duplicate check (shape hash plus a 16×16 colour thumbnail) skips screens that were already read; a shape hash alone merges different events drawn in the same pop-up template, which the tests cover. Images are downscaled to a long edge of 1024 px: on Claude image tokens grow with pixel area, on Gemini the size only changes upload time (see Results).
 - **Structured output.** The answer is constrained to a JSON schema (`liveops_vision/schema.py`), so it always parses: screen type, event flag, title as written, mechanics, motivations, timer, rewards, confidence and one sentence of evidence.
-- **Cascade.** The cheap model reads everything. When it is not confident, or it calls the mechanic "Other", the screenshot goes to the strong model. The rule is one function (`metrics.needs_escalation`) and is evaluated on the same data as the single models.
+- **Cascade.** The cheap model reads everything, and a rule decides which screenshots go to the strong model. Two rules are measured on the same data as the single models: low confidence or mechanic "Other" (`metrics.needs_escalation`) and disagreement between two cheap models (`metrics.disagree`, `run.py --only disagree:...`).
 - **Service.** `liveops_vision/service.py` is a FastAPI app: upload a screenshot with its capture date, get the reading; `GET /games/{game}/events` returns the events calendar with first and last day seen. A repeat screenshot of the same screen extends the event without a model call. Tested on SQLite and on a real Postgres (`pgserver`), which caught a foreign-key ordering bug SQLite let through.
 
 ## Data and labels
@@ -68,4 +73,4 @@ uv run uvicorn liveops_vision.service:app
 uv run pytest
 ```
 
-A finished run is resumable: answers are appended to `runs/*.jsonl`, and a restart skips screenshots that already have one, so an interrupted run never pays twice.
+Runs are resumable: answers are appended to `runs/*.jsonl`, a restart skips screenshots that already have an answer and retries calls that failed (quota, 503), so an interrupted run never pays twice.
